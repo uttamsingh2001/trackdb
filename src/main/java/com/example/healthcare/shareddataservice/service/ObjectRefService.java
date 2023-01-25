@@ -5,6 +5,7 @@ import com.example.healthcare.shareddataservice.entity.ObjectRefEntity;
 import com.example.healthcare.shareddataservice.mapper.ObjectRefMapper;
 import com.example.healthcare.shareddataservice.model.ObjectRefRequest;
 import com.example.healthcare.shareddataservice.model.ObjectRefResponse;
+import com.example.healthcare.shareddataservice.model.PatchObjectRef;
 import com.example.healthcare.shareddataservice.repository.ObjectRefRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -46,5 +47,16 @@ public class ObjectRefService {
             objectRefRepository.save(objectRefEntity.get());
         }
 
+    }
+
+    public void patchObjectRefById(PatchObjectRef patchObjectRef, Long refid) {
+        Optional<ObjectRefEntity> objectRefEntityOptional = objectRefRepository.findById(refid);
+        if(objectRefEntityOptional.isPresent()){
+            objectRefEntityOptional.get().setObjectRef(patchObjectRef.getObjectRef());
+            objectRefRepository.save(objectRefEntityOptional.get());
+            log.info("patched id "+refid);
+        }else{
+            log.info("Id not found " +refid);
+        }
     }
 }
