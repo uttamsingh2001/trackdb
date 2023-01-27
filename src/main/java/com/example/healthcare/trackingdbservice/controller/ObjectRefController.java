@@ -5,11 +5,13 @@ import com.example.healthcare.trackingdbservice.model.ObjectRefResponse;
 import com.example.healthcare.trackingdbservice.model.PatchObjectRef;
 import com.example.healthcare.trackingdbservice.service.ObjectRefService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "ObjectRef", description = "ObjectRef")
 @RestController
 @RequestMapping("v1")
 public class ObjectRefController {

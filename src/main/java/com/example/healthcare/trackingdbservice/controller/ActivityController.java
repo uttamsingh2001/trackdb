@@ -5,11 +5,13 @@ import com.example.healthcare.trackingdbservice.model.ActivityResponse;
 
 import com.example.healthcare.trackingdbservice.service.ActivityService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Activity", description = "Activity")
 @RestController
 @RequestMapping(path = "v1")
 public class ActivityController {
