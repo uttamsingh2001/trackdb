@@ -1,7 +1,10 @@
 package com.example.healthcare.shareddataservice.entity;
 
 import com.example.healthcare.shareddataservice.entity.base.BaseEntity;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
