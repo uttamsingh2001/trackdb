@@ -3,11 +3,15 @@ package com.example.healthcare.shareddataservice.controller;
 import com.example.healthcare.shareddataservice.model.ActivityRequest;
 import com.example.healthcare.shareddataservice.model.ActivityResponse;
 import com.example.healthcare.shareddataservice.service.ActivityService;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping(path = "v1")
 public class ActivityController {
     private final ActivityService activityService;
 
@@ -15,13 +19,22 @@ public class ActivityController {
         this.activityService = activityService;
     }
 
-    @PostMapping("/v1/activities")
+    @ApiResponse(responseCode = "200", description = "Success")
+    @ApiResponse(responseCode = "400", description = "Invalid request")
+    @ApiResponse(responseCode = "404", description = "Not found")
+    @ApiResponse(responseCode = "500", description = "System Error")
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping(path = "/activities",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ActivityResponse> createActivities(@RequestBody ActivityRequest activityRequest){
         ActivityResponse activityResponse=activityService.createActivities(activityRequest);
         return new ResponseEntity<>(activityResponse, HttpStatus.CREATED);
     }
 
-    @PutMapping("/v1/activities/{activityId}")
+    @ApiResponse(responseCode = "207", description = "Multi Success")
+    @ApiResponse(responseCode = "400", description = "Invalid request")
+    @ApiResponse(responseCode = "404", description = "Not found")
+    @ApiResponse(responseCode = "500", description = "System Error")
+    @PutMapping(path="/activities/{activityId}",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> updateActivities(@PathVariable Long activityId,@RequestBody ActivityRequest activityRequest)
     {
         activityService.updateActivities(activityId,activityRequest);

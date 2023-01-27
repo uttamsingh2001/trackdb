@@ -24,25 +24,25 @@ public class MessageService {
     public MessageResponse createMessage(MessageRequest messageRequest) {
         MessageEntity messageEntity = messageMapper.toEntity(messageRequest);
         messageRepository.save(messageEntity);
+        log.info("Message details saved successfully!!!");
+
         MessageResponse messageResponse = messageMapper.toModel1(messageEntity);
         return messageResponse;
     }
 
     public MessageRequest updateMessage(String messageGuid, MessageRequest messageRequest) {
         MessageEntity oldMessageEntity = messageRepository.findByMessageGuid(messageGuid);
-        Long msgId = oldMessageEntity.getMsgId();
 
+        Long msgId = oldMessageEntity.getMsgId();
         ProcessingStatusTypeEntity processingStatusTypeEntity = oldMessageEntity.getProcessingStatusTypeEntity();
         String processingStatusTypeCd = processingStatusTypeEntity.getProcessingStatusTypeCD();
-
         MessageEntity newMessageEntity = messageMapper.toEntity(messageRequest);
-
         newMessageEntity.setMessageGuid(messageGuid);
         newMessageEntity.setMsgId(msgId);
         newMessageEntity.getProcessingStatusTypeEntity().setProcessingStatusTypeCD(processingStatusTypeCd);
-
         messageRepository.save(newMessageEntity);
-        log.info("successfully UpdateEmployee");
+        log.info("Message updated successfully!!!");
+
         return messageRequest;
     }
 }

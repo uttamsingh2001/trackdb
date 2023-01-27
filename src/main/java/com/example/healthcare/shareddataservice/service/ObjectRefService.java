@@ -7,6 +7,7 @@ import com.example.healthcare.shareddataservice.model.ObjectRefRequest;
 import com.example.healthcare.shareddataservice.model.ObjectRefResponse;
 import com.example.healthcare.shareddataservice.model.PatchObjectRef;
 import com.example.healthcare.shareddataservice.repository.ObjectRefRepository;
+import com.example.healthcare.shareddataservice.util.Constants;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
@@ -26,37 +27,25 @@ public class ObjectRefService {
     }
 
     public ObjectRefResponse createObjectRef(ObjectRefRequest objectRefRequest) {
+
         ObjectRefEntity objectRefEntity=objectRefMapper.toEntity(objectRefRequest);
         objectRefRepository.save(objectRefEntity);
+        log.info("ObjectRef details saved successfully!!!");
+
         ObjectRefResponse objectRefResponse=objectRefMapper.toModel1(objectRefEntity);
         return objectRefResponse;
     }
 
-    public void patchObjectRef(Long objectRefID, Map<String, Object> fields) {
-        Optional<ObjectRefEntity> objectRefEntity=objectRefRepository.findById(objectRefID);
+    public void patchObjectRefById(PatchObjectRef patchObjectRef, Long refId) {
+        Optional<ObjectRefEntity> objectRefEntityOptional = Optional.ofNullable(objectRefRepository.findById(refId)
+                .orElseThrow(() -> new IllegalArgumentException(Constants.INVALID_INPUT_MSG)));
 
-        if(objectRefEntity.isPresent()) {
-            fields.forEach((key, value) -> {
-
-                Field field = ReflectionUtils.findField(ObjectRefEntity.class, key);
-                field.setAccessible(true);
-                ReflectionUtils.setField(field, objectRefEntity, value);
-
-            });
-
-            objectRefRepository.save(objectRefEntity.get());
-        }
-
-    }
-
-    public void patchObjectRefById(PatchObjectRef patchObjectRef, Long refid) {
-        Optional<ObjectRefEntity> objectRefEntityOptional = objectRefRepository.findById(refid);
         if(objectRefEntityOptional.isPresent()){
             objectRefEntityOptional.get().setObjectRef(patchObjectRef.getObjectRef());
             objectRefRepository.save(objectRefEntityOptional.get());
-            log.info("patched id "+refid);
+            log.info("patched id "+refId);
         }else{
-            log.info("Id not found " +refid);
+            log.info("Id not found " +refId);
         }
     }
 }

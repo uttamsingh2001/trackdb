@@ -7,6 +7,9 @@ import com.example.healthcare.shareddataservice.model.DataJobResponse;
 import com.example.healthcare.shareddataservice.repository.DataJobRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.util.Collection;
 
 @Log4j2
 @Service
@@ -21,8 +24,11 @@ public class DataJobService {
     }
 
     public DataJobResponse createDataJob(DataJobRequest dataJobRequest) {
+
         DataJobEntity dataJobEntity = dataJobMapper.toEntity(dataJobRequest);
         dataJobRepository.save(dataJobEntity);
+        log.info("DataJob details saved successfully!!!");
+
         DataJobResponse dataJobResponse = dataJobMapper.toModel1(dataJobEntity);
         return dataJobResponse;
 
@@ -31,23 +37,19 @@ public class DataJobService {
 
         DataJobEntity oldDataJobEntity=dataJobRepository.findByDataJobGuid(dataJobGuid);
 
-        Long dataJobId=oldDataJobEntity.getDataJobId();    //pm
-
+        Long dataJobId=oldDataJobEntity.getDataJobId();
         JobStatusTypeEntity jobStatusTypeEntity=oldDataJobEntity.getJobStatusTypeEntity();
         DataChannelEntity dataChannelEntity=oldDataJobEntity.getDataChannelEntity();
-
-        String jobStatusTypeCD= jobStatusTypeEntity.getJobStatusTypeCD();  //pm
-        String dataChannelCd=dataChannelEntity.getDataChannelCd();   //pm
-
+        String jobStatusTypeCD= jobStatusTypeEntity.getJobStatusTypeCD();
+        String dataChannelCd=dataChannelEntity.getDataChannelCd();
         DataJobEntity newDataJobEntity=dataJobMapper.toEntity(dataJobRequest);
-
         newDataJobEntity.setDataJobGuid(dataJobGuid);
         newDataJobEntity.setDataJobId(dataJobId);
         newDataJobEntity.getDataChannelEntity().setDataChannelCd(dataChannelCd);
         newDataJobEntity.getJobStatusTypeEntity().setJobStatusTypeCD(jobStatusTypeCD);
-
         dataJobRepository.save(newDataJobEntity);
-        log.info("Updated Successfull DataJobEntity");
+
+        log.info("Data Job updated Successfully!!!");
 
 
     }
