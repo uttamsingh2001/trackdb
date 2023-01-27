@@ -17,8 +17,8 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = true)
 public class MessageEntity extends BaseEntity  {
     @Id
-    @SequenceGenerator(name = "seq_address_id", sequenceName = "seq_address_id",initialValue = 1000,allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_address_id")
+    @SequenceGenerator(name = "msg_id", sequenceName = "msg_id",initialValue = 1000,allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "msg_id")
     @Column(name = "msg_id",nullable = false)
     private Long msgId;
     @Column(name = "data_job_guid",length = 38,nullable = false)

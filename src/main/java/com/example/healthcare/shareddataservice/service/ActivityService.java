@@ -12,6 +12,9 @@ import com.example.healthcare.shareddataservice.util.Constants;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Log4j2
 @Service
 public class ActivityService {
@@ -54,6 +57,18 @@ public class ActivityService {
 
         log.info("Activities Updated successfully!!!");
 
-
     }
+
+//    public ActivityRequest searchActivities(Long msgId) {
+//        Optional<ActivityEntity> optionalActivityEntity = activityRepository.findBymsgId(msgId);
+//        ActivityRequest activity = new ActivityRequest();
+//        if (optionalActivityEntity.isPresent()) {
+//            activity = activityMapper.toModel(optionalActivityEntity.get());
+//            log.info("Found activities with message id {}", msgId);
+//        } else {
+//            log.info("Activity not found with the message id{}", msgId);
+//        }
+//        return activity;
+//    }
+
 }

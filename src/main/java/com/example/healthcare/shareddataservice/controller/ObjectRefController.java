@@ -45,13 +45,4 @@ public class ObjectRefController {
     }
 
 
-
-//    @PatchMapping("/v1/object-refs/{objectRefID}")
-//    public ResponseEntity<Void> patchObjectRef(@PathVariable Long objectRefID, Map<String, Object> fields)
-//    {
-//        objectRefService.patchObjectRef(objectRefID,fields);
-//        return ResponseEntity.ok().build();
-//
-//    }
-
 }

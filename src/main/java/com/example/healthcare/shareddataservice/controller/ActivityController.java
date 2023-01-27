@@ -2,6 +2,7 @@ package com.example.healthcare.shareddataservice.controller;
 
 import com.example.healthcare.shareddataservice.model.ActivityRequest;
 import com.example.healthcare.shareddataservice.model.ActivityResponse;
+
 import com.example.healthcare.shareddataservice.service.ActivityService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.HttpStatus;
@@ -40,5 +41,6 @@ public class ActivityController {
         activityService.updateActivities(activityId,activityRequest);
         return ResponseEntity.ok().build();
     }
+
 
 }
