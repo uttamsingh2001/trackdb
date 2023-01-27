@@ -6,6 +6,7 @@ import com.example.healthcare.trackingdbservice.mapper.MessageMapper;
 import com.example.healthcare.trackingdbservice.model.MessageRequest;
 import com.example.healthcare.trackingdbservice.model.MessageResponse;
 import com.example.healthcare.trackingdbservice.repository.MessageRepository;
+import com.example.healthcare.trackingdbservice.util.Constants;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +32,8 @@ public class MessageService {
     }
 
     public MessageRequest updateMessage(String messageGuid, MessageRequest messageRequest) {
-        MessageEntity oldMessageEntity = messageRepository.findByMessageGuid(messageGuid);
+        MessageEntity oldMessageEntity = messageRepository.findByMessageGuid(messageGuid)
+                .orElseThrow(() -> new IllegalArgumentException(Constants.INVALID_INPUT_MSG));
 
         Long msgId = oldMessageEntity.getMsgId();
         ProcessingStatusTypeEntity processingStatusTypeEntity = oldMessageEntity.getProcessingStatusTypeEntity();

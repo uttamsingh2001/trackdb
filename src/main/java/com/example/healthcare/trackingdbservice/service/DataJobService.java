@@ -5,6 +5,7 @@ import com.example.healthcare.trackingdbservice.mapper.DataJobMapper;
 import com.example.healthcare.trackingdbservice.model.DataJobRequest;
 import com.example.healthcare.trackingdbservice.model.DataJobResponse;
 import com.example.healthcare.trackingdbservice.repository.DataJobRepository;
+import com.example.healthcare.trackingdbservice.util.Constants;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,9 @@ public class DataJobService {
     }
     public void updateDataJob(String dataJobGuid, DataJobRequest dataJobRequest) {
 
-        DataJobEntity oldDataJobEntity=dataJobRepository.findByDataJobGuid(dataJobGuid);
+        DataJobEntity oldDataJobEntity=dataJobRepository.findByDataJobGuid(dataJobGuid)
+                .orElseThrow(() -> new IllegalArgumentException(Constants.INVALID_INPUT_MSG));
+        ;
 
         Long dataJobId=oldDataJobEntity.getDataJobId();
         JobStatusTypeEntity jobStatusTypeEntity=oldDataJobEntity.getJobStatusTypeEntity();
@@ -47,7 +50,6 @@ public class DataJobService {
         dataJobRepository.save(newDataJobEntity);
 
         log.info("Data Job updated Successfully!!!");
-
 
     }
 }

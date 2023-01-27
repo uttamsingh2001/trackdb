@@ -1,5 +1,6 @@
 package com.example.healthcare.trackingdbservice.controller;
 
+import com.example.healthcare.trackingdbservice.entity.MessageEntity;
 import com.example.healthcare.trackingdbservice.model.ActivityRequest;
 import com.example.healthcare.trackingdbservice.model.ActivityResponse;
 
@@ -40,6 +41,12 @@ public class ActivityController {
     {
         activityService.updateActivities(activityId,activityRequest);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/activities")
+    public ResponseEntity<ActivityRequest> getActivities(@RequestParam Long activityId){
+        ActivityRequest activityRequest=activityService.getActivities(activityId);
+        return new ResponseEntity<>(activityRequest,HttpStatus.OK);
     }
 
 

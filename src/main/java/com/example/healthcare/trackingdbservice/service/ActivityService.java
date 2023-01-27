@@ -56,6 +56,14 @@ public class ActivityService {
 
     }
 
+    public ActivityRequest getActivities(Long activityId) {
+        ActivityEntity activityEntity=activityRepository.findById(activityId).get();
+        ActivityRequest activityRequest=activityMapper.toModel(activityEntity);
+        return activityRequest;
+
+
+    }
+
 //    public ActivityRequest searchActivities(Long msgId) {
 //        Optional<ActivityEntity> optionalActivityEntity = activityRepository.findBymsgId(msgId);
 //        ActivityRequest activity = new ActivityRequest();

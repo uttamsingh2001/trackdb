@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -68,6 +70,10 @@ public class MessageEntity extends BaseEntity  {
     private String errorDescription;
     @Column(name = "error_severity",length = 20)
     private String errorSeverity;
+
+//    @OneToMany(mappedBy = "messageEntity", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+//            CascadeType.REFRESH })
+//    private List<ActivityEntity> activityEntities;
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "processing_status_type")

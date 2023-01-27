@@ -4,8 +4,10 @@ import com.example.healthcare.trackingdbservice.entity.MessageEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface MessageRepository extends CrudRepository<MessageEntity,Long> {
-     MessageEntity findByMessageGuid(String messageGuid);
+     Optional<MessageEntity> findByMessageGuid(String messageGuid);
 
 }
