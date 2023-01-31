@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProcessingStatusTypeRequest extends BaseRequest {
-    private String description;
-    private int activeBit;
+public class JobStats {
+    private Long totalMessageCount;
+    private Long completedMessageCount;
+
 }

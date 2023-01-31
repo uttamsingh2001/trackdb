@@ -4,6 +4,7 @@ import com.example.healthcare.trackingdbservice.entity.*;
 import com.example.healthcare.trackingdbservice.mapper.DataJobMapper;
 import com.example.healthcare.trackingdbservice.model.DataJobRequest;
 import com.example.healthcare.trackingdbservice.model.DataJobResponse;
+import com.example.healthcare.trackingdbservice.model.JobStatusTypeRequest;
 import com.example.healthcare.trackingdbservice.repository.DataJobRepository;
 import com.example.healthcare.trackingdbservice.util.Constants;
 import lombok.extern.log4j.Log4j2;
@@ -50,6 +51,17 @@ public class DataJobService {
         dataJobRepository.save(newDataJobEntity);
 
         log.info("Data Job updated Successfully!!!");
+
+    }
+
+    public JobStatusTypeRequest getProcessingStatus(String dataJobGuid) {
+        DataJobEntity dataJobEntity=dataJobRepository.findByDataJobGuid(dataJobGuid).get();
+        DataJobRequest dataJobRequest=dataJobMapper.toModel(dataJobEntity);
+        log.info(dataJobRequest);
+        JobStatusTypeRequest jobStatusTypeRequest=dataJobRequest.getJobStatusTypeRequest();
+        log.info(jobStatusTypeRequest);
+        return jobStatusTypeRequest;
+
 
     }
 }

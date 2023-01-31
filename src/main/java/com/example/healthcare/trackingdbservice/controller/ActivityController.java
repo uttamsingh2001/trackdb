@@ -7,6 +7,8 @@ import com.example.healthcare.trackingdbservice.model.ActivityResponse;
 import com.example.healthcare.trackingdbservice.service.ActivityService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +16,14 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Activity", description = "Activity")
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(path = "v1")
+@Log4j2
 public class ActivityController {
     private final ActivityService activityService;
-    public ActivityController(ActivityService activityService) {
-        this.activityService = activityService;
-    }
+//    public ActivityController(ActivityService activityService) {
+//        this.activityService = activityService;
+//    }
 
     @ApiResponse(responseCode = "200", description = "Success")
     @ApiResponse(responseCode = "400", description = "Invalid request")
@@ -43,10 +47,12 @@ public class ActivityController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/activities")
-    public ResponseEntity<ActivityRequest> getActivities(@RequestParam Long activityId){
-        ActivityRequest activityRequest=activityService.getActivities(activityId);
+    @GetMapping("/activities/{msgId}")
+    public ResponseEntity<ActivityRequest> searchActivities(@RequestParam(name = "msgId") Long msgId){
+        ActivityRequest activityRequest=activityService.getActivities(msgId);
+        log.info("Message Id is :- " + msgId );
         return new ResponseEntity<>(activityRequest,HttpStatus.OK);
+
     }
 
 

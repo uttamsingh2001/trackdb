@@ -51,7 +51,6 @@ public class MessageEntity extends BaseEntity  {
     private String msgType;
     @Column(name = "message_guid",length = 38,nullable = false)
     private String messageGuid= String.valueOf(UUID.randomUUID());
-
     @Column(name = "prev_massage_guid",length = 38)
     private String prevMessageGuid;
     @Column(name = "external_patient_id",length = 120)
@@ -71,9 +70,9 @@ public class MessageEntity extends BaseEntity  {
     @Column(name = "error_severity",length = 20)
     private String errorSeverity;
 
-//    @OneToMany(mappedBy = "messageEntity", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
-//            CascadeType.REFRESH })
-//    private List<ActivityEntity> activityEntities;
+    //    @OneToMany(mappedBy = "messageEntity", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+    //            CascadeType.REFRESH })
+    //    private List<ActivityEntity> activityEntities;
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "processing_status_type")

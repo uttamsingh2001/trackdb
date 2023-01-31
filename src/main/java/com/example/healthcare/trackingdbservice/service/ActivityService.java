@@ -12,6 +12,8 @@ import com.example.healthcare.trackingdbservice.util.Constants;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Log4j2
 @Service
 public class ActivityService {
@@ -56,24 +58,23 @@ public class ActivityService {
 
     }
 
-    public ActivityRequest getActivities(Long activityId) {
-        ActivityEntity activityEntity=activityRepository.findById(activityId).get();
-        ActivityRequest activityRequest=activityMapper.toModel(activityEntity);
+    public ActivityRequest getActivities(Long msgId) {
+
+        log.info("Message Id is :- "+ msgId );
+
+        Optional<ActivityEntity> optionalActivityEntity=activityRepository.findByMsgId(msgId);
+
+        log.info("Activity Entity is :- " + optionalActivityEntity );
+        ActivityRequest activityRequest=new ActivityRequest();
+
+        if(optionalActivityEntity.isPresent()){
+            activityRequest=activityMapper.toModel(optionalActivityEntity.get());
+            log.info("Retrieving activities with message id {}", msgId);
+
+        }
         return activityRequest;
 
 
     }
-
-//    public ActivityRequest searchActivities(Long msgId) {
-//        Optional<ActivityEntity> optionalActivityEntity = activityRepository.findBymsgId(msgId);
-//        ActivityRequest activity = new ActivityRequest();
-//        if (optionalActivityEntity.isPresent()) {
-//            activity = activityMapper.toModel(optionalActivityEntity.get());
-//            log.info("Found activities with message id {}", msgId);
-//        } else {
-//            log.info("Activity not found with the message id{}", msgId);
-//        }
-//        return activity;
-//    }
 
 }

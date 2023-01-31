@@ -2,9 +2,11 @@ package com.example.healthcare.trackingdbservice.controller;
 
 import com.example.healthcare.trackingdbservice.model.DataJobRequest;
 import com.example.healthcare.trackingdbservice.model.DataJobResponse;
+import com.example.healthcare.trackingdbservice.model.JobStatusTypeRequest;
 import com.example.healthcare.trackingdbservice.service.DataJobService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "DataJob", description = "DataJob")
 @RestController
 @RequestMapping("v1")
+@Log4j2
 public class DataJobController {
 
     private final DataJobService dataJobService;
@@ -44,5 +47,19 @@ public class DataJobController {
         return ResponseEntity.ok().build();
 
     }
+
+    @ApiResponse(responseCode = "207", description = "Multi Success")
+    @ApiResponse(responseCode = "400", description = "Invalid request")
+    @ApiResponse(responseCode = "404", description = "Not found")
+    @ApiResponse(responseCode = "500", description = "System Error")
+    @GetMapping("/datajobs/{dataJobGuid}/status")
+    public ResponseEntity<JobStatusTypeRequest> getProcessingStatus(@PathVariable String dataJobGuid){
+        JobStatusTypeRequest jobStatusTypeRequest=dataJobService.getProcessingStatus(dataJobGuid);
+        log.info(jobStatusTypeRequest);
+        return new ResponseEntity<>(jobStatusTypeRequest,HttpStatus.OK);
+
+    }
+
+
 
  }

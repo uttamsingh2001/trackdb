@@ -6,10 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -21,19 +23,23 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class ProcessingStatusTypeEntity extends BaseEntity{
+public class ProcessingStatusTypeEntity extends BaseEntity {
 
+    /*  @Id
+      @Column(name = "processing_status_type_cd",length = 120,nullable = false)*/
     @Id
-    @Column(name = "processing_status_type_cd",length = 120,nullable = false)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @Column(name = "processing_status_type_cd")
     private String processingStatusTypeCD;
 
     @Column(name = "description", length = 255)
     private String description;
 
-    @Column(name = "active_bit",nullable = false)
+    @Column(name = "active_bit", nullable = false)
     private int activeBit;
-//
-//    @OneToMany(mappedBy = "processingStatusTypeEntity", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
-//            CascadeType.REFRESH })
-//    private List<MessageEntity> messageEntities;
+
+    @OneToMany(mappedBy = "processingStatusTypeEntity", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+            CascadeType.REFRESH})
+    private List<MessageEntity> messageEntities;
 }
